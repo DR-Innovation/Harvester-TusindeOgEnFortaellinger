@@ -16,7 +16,7 @@
  */
 
 require "bootstrap.php";
-use oaipmh\TusindeOgEnClient;
+use toef\TOEFClient;
 
 /**
  * Main class of the OAI-PMH Harvester.
@@ -31,15 +31,21 @@ class TOEFHarvester extends AChaosImporter {
 	
 	/**
 	 * The client to use when communicating with the OAI-PMH service.
-	 * @var OAIPMHClient
+	 * @var TOEFClient
 	 */
 	protected $_toef;
 	
 	/**
-	 * The base url of the external OAI-PMH compliant webservice.
+	 * The base url of the external 1001 Fortællinger REST webservice.
 	 * @var string
 	 */
 	protected $_TOEFBaseUrl;
+	
+	/**
+	 * The key to authenticate towards the external 1001 Fortællinger REST webservice.
+	 * @var string
+	 */
+	protected $_TOEFKey;
 	
 	/**
 	 * Constructor for the DFI Harvester
@@ -49,6 +55,7 @@ class TOEFHarvester extends AChaosImporter {
 	public function __construct($args) {
 		// Adding configuration parameters
 		$this->_CONFIGURATION_PARAMETERS["TOEF_BASE_URL"] = "_TOEFBaseUrl";
+		$this->_CONFIGURATION_PARAMETERS["TOEF_KEY"] = "_TOEFKey";
 		// Adding xml generators.
 		/*
 		$this->_metadataGenerators[] = dfi\dka\DKAMetadataGenerator::instance();
@@ -62,31 +69,56 @@ class TOEFHarvester extends AChaosImporter {
 		*/
 		
 		parent::__construct($args);
-		$this->OAIPMH_initialize();
+		$this->TOEF_initialize();
+		$this->testXMLGenerator();
 	}
 	
 	function TOEF_initialize() {
-		
+		$this->_toef = new TOEFClient($this->_TOEFBaseUrl, $this->_TOEFKey);
 	}
 	
 	protected function fetchRange($start, $count) {
+		$result = array();
+		// TODO: Consider this might be a problem if the service changes.
+		$page = floor($start / TOEFClient::PAGE_SIZE);
+		$offset = $page * TOEFClient::PAGE_SIZE;
+		// The webservice is one-indexed.
+		$page += 1;
 		
+		do {
+			$response = $this->_toef->sights($page);
+			foreach($response->sight as $sight) {
+				if($offset < $start) {
+					$offset++;
+					continue;
+				} elseif ($offset < $count) {
+					$result[] = $sight;
+					$offset++;
+				} else {
+					// All done
+					break 2;
+				}
+			}
+			$page++;
+		} while(false);
+		
+		return $result;
 	}
 	
 	protected function fetchSingle($reference) {
-		
+		$this->_toef->sight($reference);
 	}
 	
 	protected function externalObjectToString($externalObject) {
-		//var_dump($externalObject);
+		return strval($externalObject->title);
 	}
 	
 	protected function getOrCreateObject($externalObject) {
-		
+		throw new RuntimeException(__METHOD__. " not implemented.");
 	}
 	
-	protected function initializeExtras(&$extras) {
-		// Nothing to do here.
+	protected function initializeExtras($externalObject, &$extras) {
+		var_dump($externalObject);
 	}
 	
 	protected function shouldBeSkipped($externalObject) {
@@ -103,6 +135,48 @@ class TOEFHarvester extends AChaosImporter {
 	
 	public function getExternalClient() {
 		return $this->_toef;
+	}
+	
+	public function testXMLGenerator() {
+		print("Testing the XML XSLT Generator.\n");
+		
+		print("Fetch an external object.\n");
+		$sight = $this->_toef->sight(1230);
+		if($sight === false) {
+			print("Couldn't fetch a sigle sight.");
+			exit;
+		}
+		
+		$extras = array('fileTypes' => array());
+		if(count($sight->images) > 0) {
+			$extras['fileTypes'][] = 'Picture';
+		}
+		if(strval($sight->speak) != '') {
+			$extras['fileTypes'][] = 'Sound';
+		}
+		$extras['fileTypes'] = implode(', ', $extras['fileTypes']);
+		
+		print("Initializing the generators.\n");
+		$generator1 = new XSLTMetadataGenerator('../stylesheets/DKA.1001Fortællinger.Sight.xsl');
+		$generator2 = new XSLTMetadataGenerator('../stylesheets/DKA2.xsl');
+		
+		print("Generating metadata #1.\n");
+		$result = $generator1->generateXML($sight, $extras);
+		
+		$result->formatOutput = true;
+		echo $result->saveXML();
+		
+		print("Generating metadata #2.\n");
+		$result = $generator2->generateXML($sight, $extras);
+		
+		$result->formatOutput = true;
+		echo $result->saveXML();
+		
+		exit;
+	}
+	
+	static public function generateObjectType($images, $speak) {
+		return "OK";
 	}
 }
 
