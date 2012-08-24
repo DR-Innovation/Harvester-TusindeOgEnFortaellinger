@@ -48,6 +48,55 @@ class TOEFHarvester extends AChaosImporter {
 	protected $_TOEFKey;
 	
 	/**
+	 * The object type of a chaos object, to be used later.
+	 * Populated when AChaosImporter::loadConfiguration is called.
+	 * @var string
+	 */
+	protected $_objectTypeID;
+	
+	/**
+	 * The ID of the format to be used when linking images to a DKA Program.
+	 * Populated when AChaosImporter::loadConfiguration is called.
+	 * @var string
+	 */
+	protected $_imageFormatID;
+	
+	/**
+	 * The ID of the format to be used when linking lowres-images to a DKA Program.
+	 * Populated when AChaosImporter::loadConfiguration is called.
+	 * @var string
+	 */
+	protected $_lowResImageFormatID;
+	
+	/**
+	 * The ID of the format to be used when linking thumbnail.images to a DKA Program.
+	 * Populated when AChaosImporter::loadConfiguration is called.
+	 * @var string
+	 */
+	protected $_thumbnailImageFormatID;
+	
+	/**
+	 * The ID of the format to be used when linking images to a DKA Program.
+	 * Populated when AChaosImporter::loadConfiguration is called.
+	 * @var string
+	 */
+	protected $_imageDestinationID;
+	
+	/**
+	 * The ID of the format to be used when linking videos to a DKA Program.
+	 * Populated when AChaosImporter::loadConfiguration is called.
+	 * @var string
+	 */
+	protected $_speakFormatID;
+	
+	/**
+	 * The ID of the format to be used when linking videos to a DKA Program.
+	 * Populated when AChaosImporter::loadConfiguration is called.
+	 * @var string
+	 */
+	protected $_speakDestinationID;
+	
+	/**
 	 * Constructor for the DFI Harvester
 	 * @throws RuntimeException if the Chaos services are unreachable or
 	 * if the Chaos credentials provided fails to authenticate the session.
@@ -56,28 +105,40 @@ class TOEFHarvester extends AChaosImporter {
 		// Adding configuration parameters
 		$this->_CONFIGURATION_PARAMETERS["TOEF_BASE_URL"] = "_TOEFBaseUrl";
 		$this->_CONFIGURATION_PARAMETERS["TOEF_KEY"] = "_TOEFKey";
+		$this->_CONFIGURATION_PARAMETERS["CHAOS_TOEF_OBJECT_TYPE_ID"] = "_objectTypeID";
+		
+		$this->_CONFIGURATION_PARAMETERS["CHAOS_TOEF_IMAGE_FORMAT_ID"] = "_imageFormatID";
+		$this->_CONFIGURATION_PARAMETERS["CHAOS_TOEF_LOWRES_IMAGE_FORMAT_ID"] = "_lowResImageFormatID";
+		$this->_CONFIGURATION_PARAMETERS["CHAOS_TOEF_THUMBNAIL_IMAGE_FORMAT_ID"] = "_thumbnailImageFormatID";
+		$this->_CONFIGURATION_PARAMETERS["CHAOS_TOEF_IMAGE_DESTINATION_ID"] = "_imageDestinationID";
+		
+		$this->_CONFIGURATION_PARAMETERS["CHAOS_TOEF_SPEAK_FORMAT_ID"] = "_speakFormatID";
+		$this->_CONFIGURATION_PARAMETERS["CHAOS_TOEF_SPEAK_DESTINATION_ID"] = "_speakDestinationID";
+		
 		// Adding xml generators.
-		/*
-		$this->_metadataGenerators[] = new dfi\dka\DKAMetadataGenerator();
-		$this->_metadataGenerators[] = new dfi\dka\DKA2MetadataGenerator();
-		$this->_metadataGenerators[] = new dfi\dka\DFIMetadataGenerator();
-		*/
+		$this->_metadataGenerators[] = new XSLTMetadataGenerator('../stylesheets/DKA2.xsl', '5906a41b-feae-48db-bfb7-714b3e105396');
+		$this->_metadataGenerators[] = new XSLTMetadataGenerator('../stylesheets/DKA.xsl', '00000000-0000-0000-0000-000063c30000');
 		// Adding file extractors.
-		/*
-		$this->_fileExtractors[] = new dfi\DFIImageExtractor();
-		$this->_fileExtractors[] = new dfi\DFIVideoExtractor();
-		*/
+		$this->_fileExtractors['image'] = new toef\TOEFImageExtractor();
+		$this->_fileExtractors['speak'] = new toef\TOEFSpeakExtractor();
 		
 		parent::__construct($args);
 		$this->TOEF_initialize();
-		$this->testXMLGenerator();
+		//$this->testXMLGenerator();
 	}
 	
 	function TOEF_initialize() {
 		$this->_toef = new TOEFClient($this->_TOEFBaseUrl, $this->_TOEFKey);
+		
+		$this->_fileExtractors['image']->_imageFormatID = $this->_imageFormatID;
+		$this->_fileExtractors['image']->_lowResImageFormatID = $this->_lowResImageFormatID;
+		$this->_fileExtractors['image']->_thumbnailImageFormatID = $this->_thumbnailImageFormatID;
+		$this->_fileExtractors['image']->_imageDestinationID = $this->_imageDestinationID;
+		$this->_fileExtractors['speak']->_speakDestinationID = $this->_speakDestinationID;
+		$this->_fileExtractors['speak']->_speakFormatID = $this->_speakFormatID;
 	}
 	
-	protected function fetchRange($start, $count) {
+	protected function fetchRange($start, $count = null) {
 		$result = array();
 		// TODO: Consider this might be a problem if the service changes.
 		$page = floor($start / TOEFClient::PAGE_SIZE);
@@ -91,7 +152,7 @@ class TOEFHarvester extends AChaosImporter {
 				if($offset < $start) {
 					$offset++;
 					continue;
-				} elseif ($offset < $count) {
+				} elseif ($count == null || $offset < $count) {
 					$result[] = $sight;
 					$offset++;
 				} else {
@@ -100,25 +161,29 @@ class TOEFHarvester extends AChaosImporter {
 				}
 			}
 			$page++;
-		} while(false);
+		} while($response->sight->count() > 0);
 		
 		return $result;
 	}
 	
 	protected function fetchSingle($reference) {
-		$this->_toef->sight($reference);
+		return $this->_toef->sight($reference);
 	}
 	
 	protected function externalObjectToString($externalObject) {
 		return strval($externalObject->title);
 	}
 	
-	protected function getOrCreateObject($externalObject) {
-		throw new RuntimeException(__METHOD__. " not implemented.");
-	}
-	
-	protected function initializeExtras($externalObject, &$extras) {
-		var_dump($externalObject);
+	protected function initializeExtras($sight, &$extras) {
+		$extras = array('fileTypes' => array());
+		if($sight->images->count() > 0) {
+			$extras['fileTypes'][] = 'Picture';
+		}
+		if(strval($sight->speak) != '') {
+			$extras['fileTypes'][] = 'Sound';
+		}
+		$extras['fileTypes'] = implode(', ', $extras['fileTypes']);
+		$extras['id'] = strval($sight->id);
 	}
 	
 	protected function shouldBeSkipped($externalObject) {
@@ -126,57 +191,28 @@ class TOEFHarvester extends AChaosImporter {
 	}
 	
 	protected function generateChaosQuery($externalObject) {
-		return "";
+		if($externalObject == null) {
+			throw new RuntimeException("Cannot get or create a Chaos object from a null external object.");
+		}
+		$id = strval($externalObject->id);
+		
+		$folderId = $this->_ChaosFolderID;
+		$objectTypeId = $this->_objectTypeID;
+		// Extract the nummeric ID.
+		$nummericId = explode('/', $id);
+		$nummericId = $nummericId[count($nummericId)-1];
+		// Query for a Chaos Object that represents the DFI movie.
+		$old = sprintf('(DKA-Organization:"%s" AND ObjectTypeID:%u AND m00000000-0000-0000-0000-000063c30000_da_all:"%s")', 'Kulturarvsstyrelsen', $objectTypeId, $nummericId);
+		$new = sprintf('(FolderTree:%u AND ObjectTypeID:%u AND DKA-ExternalIdentifier:"%s")', $folderId, $objectTypeId, $id);
+		return sprintf('(%s OR %s)', $new, $old);
 	}
 	
 	protected function getChaosObjectTypeID() {
-		return false;
+		return $this->_objectTypeID;
 	}
 	
 	public function getExternalClient() {
 		return $this->_toef;
-	}
-	
-	public function testXMLGenerator() {
-		print("Testing the XML XSLT Generator.\n");
-		
-		print("Fetch an external object.\n");
-		$sight = $this->_toef->sight(1230);
-		if($sight === false) {
-			print("Couldn't fetch a sigle sight.");
-			exit;
-		}
-		
-		$extras = array('fileTypes' => array());
-		if(count($sight->images) > 0) {
-			$extras['fileTypes'][] = 'Picture';
-		}
-		if(strval($sight->speak) != '') {
-			$extras['fileTypes'][] = 'Sound';
-		}
-		$extras['fileTypes'] = implode(', ', $extras['fileTypes']);
-		
-		print("Initializing the generators.\n");
-		$generator1 = new XSLTMetadataGenerator('../stylesheets/DKA.1001Fortællinger.Sight.xsl');
-		$generator2 = new XSLTMetadataGenerator('../stylesheets/DKA2.xsl');
-		
-		print("Generating metadata #1.\n");
-		$result = $generator1->generateXML($sight, $extras);
-		
-		$result->formatOutput = true;
-		echo $result->saveXML();
-		
-		print("Generating metadata #2.\n");
-		$result = $generator2->generateXML($sight, $extras);
-		
-		$result->formatOutput = true;
-		echo $result->saveXML();
-		
-		exit;
-	}
-	
-	static public function generateObjectType($images, $speak) {
-		return "OK";
 	}
 }
 

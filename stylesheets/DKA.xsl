@@ -14,16 +14,16 @@
 	</xsl:template>
 	
 	<xsl:template name="sight">
-		<dka:DKA xmlns:dka="http://www.danskkulturarv.dk/DKA2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.danskkulturarv.dk/DKA2.xsd ../schemas/DKA2.xsd ">
-			<dka:Title><xsl:value-of select="title"/></dka:Title>
-			<dka:Abstract /><!-- Consider if this is correct? -->
-			<dka:Description>
-				<h2><xsl:value-of select="subtitle"/></h2>
+		<DKA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/DKA.xsd">
+			<Title><xsl:value-of select="title"/></Title>
+			<Abstract />
+			<Description>
+				<h4><xsl:value-of select="subtitle"/></h4>
 				<div>
 					<xsl:value-of select="description"/>
 				</div>
 				<xsl:for-each select="stories/story">
-					<h2><xsl:value-of select="title" /></h2>
+					<h4><xsl:value-of select="title" /></h4>
 					<div>
 						<xsl:value-of select="body" />
 						<p>
@@ -36,45 +36,55 @@
 						</p>
 					</div>
 				</xsl:for-each>
-			</dka:Description>
-			<dka:Organization>Kulturstyrelsen</dka:Organization>
-			<dka:ExternalURL><xsl:value-of select="uri"/></dka:ExternalURL>
-			<dka:ExternalIdentifier><xsl:value-of select="id"/></dka:ExternalIdentifier>
-			<dka:Type><xsl:value-of select="$fileTypes"/></dka:Type>
-			<dka:Contributors>
+			</Description>
+			<Organization>Kulturstyrelsen</Organization>
+			<Type><xsl:value-of select="$fileTypes"/></Type>
+			<CreatedDate />
+			<FirstPublishedDate />
+			<Identifier><xsl:value-of select="id"/></Identifier>
+			<Contributor>
 				<!-- xsl:for-each select=""></xsl:for-each -->
-			</dka:Contributors>
-			<dka:Creators>
+			</Contributor>
+			<Creator>
 				<xsl:for-each select="administrator">
-					<dka:Creator>
-						<dka:Name><xsl:value-of select="name" /></dka:Name>
-						<dka:Role>Administrator</dka:Role>
-					</dka:Creator>
+					<Person>
+						<Name><xsl:value-of select="name" /></Name>
+						<Role>Administrator</Role>
+					</Person>
 				</xsl:for-each>
 				<xsl:for-each select="images/image[count(. | key('image-by-credit', credit)[1]) = 1 and credit != '']">
 					<xsl:sort select="credit" />
-					<dka:Creator>
-						<dka:Name><xsl:value-of select="credit"/></dka:Name>
-						<dka:Role>Photographer</dka:Role>
-					</dka:Creator>
+					<Person>
+						<Name><xsl:value-of select="credit"/></Name>
+						<Role>Photographer</Role>
+					</Person>
 				</xsl:for-each>
 				<xsl:for-each select="stories/story[count(. | key('story-by-author_name', author/name)[1]) = 1 and author/name != '']">
 					<xsl:sort select="author/name" />
-					<dka:Creator>
-						<dka:Name><xsl:value-of select="author/name"/></dka:Name>
-						<dka:Role>Story author</dka:Role>
-					</dka:Creator>
+					<Person>
+						<Name><xsl:value-of select="author/name"/></Name>
+						<Role>Story author</Role>
+					</Person>
 				</xsl:for-each>
-			</dka:Creators>
-			<dka:Categories/>
-			<dka:Tags>
+			</Creator>
+			<TechnicalComment />
+			<Location><xsl:value-of select="geography/municipality"/></Location>
+			<RightsDescription>Copyright © Kulturstyrelsen</RightsDescription>
+			<GeoData>
+				<Latitude><xsl:value-of select="geography/latitude"/></Latitude>
+				<Longitude><xsl:value-of select="geography/longitude"/></Longitude>
+			</GeoData>
+			<Categories/>
+			<Tags>
 				<xsl:for-each select="themes/theme">
-					<dka:Tag><xsl:value-of select="title"/></dka:Tag>
+					<Tag><xsl:value-of select="title"/></Tag>
 				</xsl:for-each>
 				<xsl:for-each select="tags/tag">
-					<dka:Tag><xsl:value-of select="value"/></dka:Tag>
+					<Tag><xsl:value-of select="value"/></Tag>
 				</xsl:for-each>
-			</dka:Tags>
-		</dka:DKA>
+			</Tags>
+			<ProductionID/>
+			<StreamDuration/>
+		</DKA>
 	</xsl:template>
 </xsl:stylesheet>
