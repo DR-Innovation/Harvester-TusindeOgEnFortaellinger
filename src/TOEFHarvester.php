@@ -105,7 +105,7 @@ class TOEFHarvester extends AChaosImporter {
 		// Adding configuration parameters
 		$this->_CONFIGURATION_PARAMETERS["TOEF_BASE_URL"] = "_TOEFBaseUrl";
 		$this->_CONFIGURATION_PARAMETERS["TOEF_KEY"] = "_TOEFKey";
-		$this->_CONFIGURATION_PARAMETERS["CHAOS_TOEF_OBJECT_TYPE_ID"] = "_objectTypeID";
+		$this->_CONFIGURATION_PARAMETERS["CHAOS_DKA_OBJECT_TYPE_ID"] = "_objectTypeID";
 		
 		$this->_CONFIGURATION_PARAMETERS["CHAOS_TOEF_IMAGE_FORMAT_ID"] = "_imageFormatID";
 		$this->_CONFIGURATION_PARAMETERS["CHAOS_TOEF_LOWRES_IMAGE_FORMAT_ID"] = "_lowResImageFormatID";
