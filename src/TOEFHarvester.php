@@ -171,7 +171,9 @@ class TOEFHarvester extends AChaosImporter {
 	}
 	
 	protected function externalObjectToString($externalObject) {
-		return strval($externalObject->title);
+		$nummericId = explode('/', $externalObject->id);
+		$nummericId = $nummericId[count($nummericId)-1];
+		return sprintf("%s [%u]", strval($externalObject->title), $nummericId);
 	}
 	
 	protected function initializeExtras($sight, &$extras) {
