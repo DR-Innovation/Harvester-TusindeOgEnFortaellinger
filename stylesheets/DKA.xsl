@@ -47,23 +47,26 @@
 			</Contributor>
 			<Creator>
 				<xsl:for-each select="administrator">
-					<Person>
-						<Name><xsl:value-of select="name" /></Name>
-						<Role>Administrator</Role>
+					<Person Role="Administrator">
+						<xsl:attribute name="Name">
+							<Name><xsl:value-of select="name"/></Name>
+						</xsl:attribute>
 					</Person>
 				</xsl:for-each>
 				<xsl:for-each select="images/image[count(. | key('image-by-credit', credit)[1]) = 1 and credit != '']">
 					<xsl:sort select="credit" />
-					<Person>
-						<Name><xsl:value-of select="credit"/></Name>
-						<Role>Photographer</Role>
+					<Person Role="Photographer">
+						<xsl:attribute name="Name">
+							<Name><xsl:value-of select="credit"/></Name>
+						</xsl:attribute>
 					</Person>
 				</xsl:for-each>
 				<xsl:for-each select="stories/story[count(. | key('story-by-author_name', author/name)[1]) = 1 and author/name != '']">
 					<xsl:sort select="author/name" />
-					<Person>
-						<Name><xsl:value-of select="author/name"/></Name>
-						<Role>Story author</Role>
+					<Person Role="Story author">
+						<xsl:attribute name="Name">
+							<Name><xsl:value-of select="author/name"/></Name>
+						</xsl:attribute>
 					</Person>
 				</xsl:for-each>
 			</Creator>
