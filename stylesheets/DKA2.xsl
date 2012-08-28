@@ -18,12 +18,12 @@
 			<dka:Title><xsl:value-of select="title"/></dka:Title>
 			<dka:Abstract /><!-- Consider if this is correct? -->
 			<dka:Description>
-				<h2><xsl:value-of select="subtitle"/></h2>
+				<h4><xsl:value-of select="subtitle"/></h4>
 				<div>
 					<xsl:value-of select="description"/>
 				</div>
 				<xsl:for-each select="stories/story">
-					<h2><xsl:value-of select="title" /></h2>
+					<h4><xsl:value-of select="title" /></h4>
 					<div>
 						<xsl:value-of select="body" />
 						<p>
