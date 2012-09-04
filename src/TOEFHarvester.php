@@ -147,7 +147,9 @@ class TOEFHarvester extends AChaosImporter {
 		$page += 1;
 		
 		do {
+			timed();
 			$response = $this->_toef->sights($page);
+			timed('external');
 			foreach($response->sight as $sight) {
 				if($offset < $start) {
 					$offset++;
@@ -167,7 +169,10 @@ class TOEFHarvester extends AChaosImporter {
 	}
 	
 	protected function fetchSingle($reference) {
-		return $this->_toef->sight($reference);
+		timed();
+		$result = $this->_toef->sight($reference);
+		timed('external');
+		return $result;
 	}
 	
 	protected function externalObjectToString($externalObject) {
