@@ -27,7 +27,7 @@
 					<div>
 						<xsl:value-of select="body" />
 						<p>
-							<a target="_blank">
+							Skrevet af <a target="_blank">
 								<xsl:attribute name="href">
 									<xsl:value-of select="author/uri" />
 								</xsl:attribute>
