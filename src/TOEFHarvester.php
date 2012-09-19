@@ -121,6 +121,8 @@ class TOEFHarvester extends AChaosImporter {
 		// Adding file extractors.
 		$this->_fileExtractors['image'] = new toef\TOEFImageExtractor();
 		$this->_fileExtractors['speak'] = new toef\TOEFSpeakExtractor();
+		// TODO: Implement this extractor when video gets advailable through their service.
+		//$this->_fileExtractors['video'] = new toef\TOEFVideoExtractor();
 		
 		parent::__construct($args);
 		$this->TOEF_initialize();
