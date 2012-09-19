@@ -37,7 +37,7 @@
 					</div>
 				</xsl:for-each>
 			</dka:Description>
-			<dka:Organization>Kulturstyrelsen</dka:Organization>
+			<dka:Organization>1001 fortællinger om Danmark - Kulturstyrelsen</dka:Organization>
 			<dka:ExternalURL><xsl:value-of select="uri"/></dka:ExternalURL>
 			<dka:ExternalIdentifier><xsl:value-of select="id"/></dka:ExternalIdentifier>
 			<dka:Type><xsl:value-of select="$fileTypes"/></dka:Type>
@@ -55,14 +55,14 @@
 					<xsl:sort select="credit" />
 					<dka:Creator>
 						<dka:Name><xsl:value-of select="credit"/></dka:Name>
-						<dka:Role>Photographer</dka:Role>
+						<dka:Role>Fotograf</dka:Role>
 					</dka:Creator>
 				</xsl:for-each>
 				<xsl:for-each select="stories/story[count(. | key('story-by-author_name', author/name)[1]) = 1 and author/name != '']">
 					<xsl:sort select="author/name" />
 					<dka:Creator>
 						<dka:Name><xsl:value-of select="author/name"/></dka:Name>
-						<dka:Role>Story author</dka:Role>
+						<dka:Role>Forfatter</dka:Role>
 					</dka:Creator>
 				</xsl:for-each>
 			</dka:Creators>

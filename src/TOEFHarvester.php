@@ -216,7 +216,7 @@ class TOEFHarvester extends AChaosImporter {
 		return sprintf('(%s OR %s)', $new, $old);
 	}
 	
-	protected function getChaosObjectTypeID() {
+	protected function getChaosObjectTypeID($externalObject) {
 		return $this->_objectTypeID;
 	}
 	

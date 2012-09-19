@@ -37,7 +37,7 @@
 					</div>
 				</xsl:for-each>
 			</Description>
-			<Organization>Kulturstyrelsen</Organization>
+			<Organization>1001 fortællinger om Danmark - Kulturstyrelsen</Organization>
 			<Type><xsl:value-of select="$fileTypes"/></Type>
 			<CreatedDate />
 			<FirstPublishedDate />
@@ -55,7 +55,7 @@
 				</xsl:for-each>
 				<xsl:for-each select="images/image[count(. | key('image-by-credit', credit)[1]) = 1 and credit != '']">
 					<xsl:sort select="credit" />
-					<Person Role="Photographer">
+					<Person Role="Fotograf">
 						<xsl:attribute name="Name">
 							<Name><xsl:value-of select="credit"/></Name>
 						</xsl:attribute>
@@ -63,7 +63,7 @@
 				</xsl:for-each>
 				<xsl:for-each select="stories/story[count(. | key('story-by-author_name', author/name)[1]) = 1 and author/name != '']">
 					<xsl:sort select="author/name" />
-					<Person Role="Story author">
+					<Person Role="Forfatter">
 						<xsl:attribute name="Name">
 							<Name><xsl:value-of select="author/name"/></Name>
 						</xsl:attribute>
