@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chc:ChaosHarvesterConfiguration
+	xmlns:chc="http://www.example.org/ChaosHarvesterConfiguration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/ChaosHarvesterConfiguration ../../Base/schemas/ChaosHarvesterConfiguration.xsd ">
+	<chc:Organisation>Kulturstyrelsen</chc:Organisation>
+	<chc:Project>1001 Fortællinger</chc:Project>
+	<chc:Description>Høster indholdet fra kulturarvstyrelsens custom restful service.</chc:Description><chc:IncludePaths>
+		<chc:path>/home/creen/Projects/DR/harvesters/Base/src</chc:path>
+		<chc:path>/home/creen/Projects/DR/harvesters/chaos-client/src</chc:path>
+		<chc:path>/home/creen/Projects/Timed-PHP/src</chc:path>
+		<chc:path>/home/creen/Projects/DR/harvesters/1001Fortællinger/src</chc:path>
+	</chc:IncludePaths>
+	<chc:ChaosConfiguration>
+		<chc:URL fromEnvironment="CHAOS_URL" />
+		<chc:Email fromEnvironment="CHAOS_EMAIL" />
+		<chc:Password fromEnvironment="CHAOS_PASSWORD" />
+	</chc:ChaosConfiguration><chc:ExternalClient name="toef" className="ToefClient" namespace="\CHAOS\Harvester\toef">
+		<chc:Parameter name="URL">http://www.kulturarv.dk/1001fortaellinger/da_DK/</chc:Parameter>
+		<chc:Parameter name="key">781a930552a97c08497d3a2acdbbc60e</chc:Parameter>
+</chc:ExternalClient><chc:Modes>
+		<chc:Mode className="BasicAllMode" type="All"
+			namespace="\CHAOS\Harvester\toef\Modes" name="all" />
+		<chc:Mode className="BasicSingleByReferenceMode" type="SingleByReference"
+			namespace="\CHAOS\Harvester\toef\Modes" name="single-reference" />
+	</chc:Modes>
+	<chc:Processors>
+		<chc:ObjectProcessor className="SightObjectProcessor"
+			namespace="\CHAOS\Harvester\toef\Processors" name="sight">
+			<chc:Filters>
+			</chc:Filters>
+			<chc:FolderId>2</chc:FolderId>
+			<chc:ObjectTypeId>36</chc:ObjectTypeId>
+		</chc:ObjectProcessor>
+		<chc:MetadataProcessor className="XSLTMetadataProcessor"
+			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka">
+			<chc:Parameter name="stylesheet">../../../../1001Fortællinger/stylesheets/DKA.xsl</chc:Parameter>
+			<chc:validate>true</chc:validate>
+			<chc:schemaGUID>
+				00000000-0000-0000-0000-000063c30000
+			</chc:schemaGUID>
+		</chc:MetadataProcessor>
+		<chc:MetadataProcessor className="XSLTMetadataProcessor"
+			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka2">
+			<chc:Parameter name="stylesheet">../../../../1001Fortællinger/stylesheets/DKA2.xsl</chc:Parameter>
+			<chc:validate>true</chc:validate>
+			<chc:schemaGUID>
+				5906a41b-feae-48db-bfb7-714b3e105396
+			</chc:schemaGUID>
+		</chc:MetadataProcessor>
+	</chc:Processors>
+	
+	
+	
+</chc:ChaosHarvesterConfiguration>

@@ -52,4 +52,17 @@ class TOEFClient {
 		$reference = str_replace($this->_baseURL, '', $reference);
 		return $this->request($reference);
 	}
+	
+	public function sanityCheck() {
+		try {
+			$response = $this->sights();
+			if($response != null) {
+				return true;
+			}
+		} catch(Exception $e) {
+			// Ignore ...
+			return false;
+		}
+		return true;
+	}
 }
