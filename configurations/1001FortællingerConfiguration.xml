@@ -32,10 +32,30 @@
 			<chc:FolderId>2</chc:FolderId>
 			<chc:ObjectTypeId>36</chc:ObjectTypeId>
 		</chc:ObjectProcessor>
+		<chc:FileProcessor className="ImageFileProcessor"
+			name="sight_file_image" namespace="\CHAOS\Harvester\toef\Processors">
+			<chc:FormatId>3</chc:FormatId>
+			<chc:DestinationId>9</chc:DestinationId>
+		</chc:FileProcessor>
+		<chc:FileProcessor className="LowresImageFileProcessor"
+			name="sight_file_lowres_image" namespace="\CHAOS\Harvester\toef\Processors">
+			<chc:FormatId>8</chc:FormatId>
+			<chc:DestinationId>9</chc:DestinationId>
+		</chc:FileProcessor>
+		<chc:FileProcessor className="MainImageFileProcessor"
+			name="sight_file_main_image" namespace="\CHAOS\Harvester\toef\Processors">
+			<chc:FormatId>9</chc:FormatId>
+			<chc:DestinationId>9</chc:DestinationId>
+		</chc:FileProcessor>
+		<chc:FileProcessor className="SpeakFileProcessor"
+			name="sight_file_speak" namespace="\CHAOS\Harvester\toef\Processors">
+			<chc:FormatId>2</chc:FormatId>
+			<chc:DestinationId>9</chc:DestinationId>
+		</chc:FileProcessor>
 		<chc:MetadataProcessor className="XSLTMetadataProcessor"
 			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka">
 			<chc:Parameter name="stylesheet">../../../../1001Fortællinger/stylesheets/DKA.xsl</chc:Parameter>
-			<chc:validate>true</chc:validate>
+			<chc:validate>false</chc:validate>
 			<chc:schemaGUID>
 				00000000-0000-0000-0000-000063c30000
 			</chc:schemaGUID>
@@ -43,10 +63,11 @@
 		<chc:MetadataProcessor className="XSLTMetadataProcessor"
 			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka2">
 			<chc:Parameter name="stylesheet">../../../../1001Fortællinger/stylesheets/DKA2.xsl</chc:Parameter>
-			<chc:validate>true</chc:validate>
+			<chc:validate>false</chc:validate>
 			<chc:schemaGUID>
 				5906a41b-feae-48db-bfb7-714b3e105396
 			</chc:schemaGUID>
+			<chc:schemaLocation>../../../../1001Fortællinger/schemas/DKA2.xsd</chc:schemaLocation>
 		</chc:MetadataProcessor>
 	</chc:Processors>
 	

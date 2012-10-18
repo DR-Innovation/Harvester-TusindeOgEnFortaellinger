@@ -33,10 +33,10 @@ class ToefClient extends \toef\TOEFClient implements \CHAOS\Harvester\IExternalC
 		return $result;
 	}
 	
-	public function load($url, $class_name = null) {
+	public function request($handle, $arguments = array(), $format = "xml") {
 		timed();
-		$result = parent::load($url, $class_name);
-		timed('dfi');
+		$result = parent::request($handle, $arguments, $format);
+		timed('toef');
 		return $result;
 	}
 }

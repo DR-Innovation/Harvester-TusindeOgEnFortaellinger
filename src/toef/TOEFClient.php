@@ -18,7 +18,7 @@ class TOEFClient {
 		curl_close($this->_curlHandle);
 	}
 	
-	public function request($handle, $arguments = array(), $format = "xml") {
+	public function request($handle, $arguments = array(), $format = "xml", $verbose = false) {
 		$data = array();
 		foreach($arguments as $key => $value) {
 			if($value !== null) {
@@ -29,7 +29,9 @@ class TOEFClient {
 			$data['key'] = $this->_key;
 		}
 		$url = sprintf("%s%s.%s?%s", $this->_baseURL, $handle, $format, http_build_query($data));
-		printf("Requesting: %s\n", $url);
+		if($verbose) {
+			printf("Requesting: %s\n", $url);
+		}
 		curl_setopt($this->_curlHandle, CURLOPT_URL, $url);
 		$result = curl_exec($this->_curlHandle);
 		if($result === false) {
@@ -43,6 +45,11 @@ class TOEFClient {
 		return $this->request('sights', array('page' => $page));
 	}
 	
+	/**
+	 * Request a single sight by passing a reference to the ID.
+	 * @param int|string $reference
+	 * @return \SimpleXMLElement
+	 */
 	public function sight($reference) {
 		if(is_int($reference)) {
 			// $reference is assumed to be an integer id.
