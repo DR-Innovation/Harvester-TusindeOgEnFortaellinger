@@ -20,12 +20,14 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$nummericId = explode('/', strval($externalObject->id));
 		$nummericId = $nummericId[count($nummericId)-1];
 		
-		$legacyQuery = sprintf('(DKA-Organization:"%s" AND ObjectTypeID:%u AND m00000000-0000-0000-0000-000063c30000_da_all:"%s")', 'Kulturarvsstyrelsen', $this->_objectTypeId, $nummericId);
+		$legacyQuery = sprintf('((DKA-Organization:"%s" OR DKA-Organization:"%s") AND ObjectTypeID:%u AND m00000000-0000-0000-0000-000063c30000_da_all:"%s")', 'Kulturarvsstyrelsen', '1001 fortællinger om Danmark - Kulturstyrelsen', $this->_objectTypeId, $nummericId);
 		$newQuery = sprintf('(FolderTree:%u AND ObjectTypeID:%u AND DKA-ExternalIdentifier:"%s")', $this->_folderId, $this->_objectTypeId, strval($externalObject->id));
 
 		$shadow = new ObjectShadow();
 		$shadow->extras["fileTypes"] = "";
 		$shadow->query = sprintf("(%s OR %s)", $legacyQuery, $newQuery);
+		//echo "Query: ".$shadow->query;
+		//exit();
 		$shadow->objectTypeId = $this->_objectTypeId;
 		$shadow->folderId = $this->_folderId;
 		$shadow = $this->_harvester->process('sight_metadata_dka', $externalObject, $shadow);

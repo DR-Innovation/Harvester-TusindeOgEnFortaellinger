@@ -25,7 +25,8 @@ class BasicAllMode extends AllMode {
 			$response = $toef->sights($page);
 			timed('toef');
 			foreach($response->sight as $sight) {
-				$this->_harvester->process('sight', $sight);
+				$sightShadow = $this->_harvester->process('sight', $sight);
+				$sightShadow->commit($this->_harvester);
 			}
 			$page++;
 		} while($response->sight->count() > 0);
