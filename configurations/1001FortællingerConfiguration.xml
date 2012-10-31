@@ -5,14 +5,16 @@
 	xsi:schemaLocation="http://www.example.org/ChaosHarvesterConfiguration ../../Base/schemas/ChaosHarvesterConfiguration.xsd ">
 	<chc:Organisation>Kulturstyrelsen</chc:Organisation>
 	<chc:Project>1001 Fortællinger</chc:Project>
-	<chc:Description>Høster indholdet fra kulturarvstyrelsens custom restful service.</chc:Description><chc:IncludePaths>
-		<chc:path>/home/creen/Projects/DR/harvesters/Base/src</chc:path>
-		<chc:path>/home/creen/Projects/DR/harvesters/chaos-client/src</chc:path>
+	<chc:Description>Høster indholdet fra kulturarvstyrelsens custom restful service.</chc:Description>
+	<chc:BasePath fromEnvironment="BASEPATH" />
+	<chc:IncludePaths>
+		<chc:path>Base/src</chc:path>
+		<chc:path>chaos-client/src</chc:path>
 		<chc:path>/home/creen/Projects/Timed-PHP/src</chc:path>
-		<chc:path>/home/creen/Projects/DR/harvesters/1001Fortællinger/src</chc:path>
+		<chc:path>1001Fortællinger/src</chc:path>
 	</chc:IncludePaths>
 	<chc:ChaosConfiguration>
-		<chc:URL fromEnvironment="CHAOS_URL" />
+		<chc:URL fromEnvironment="CHAOS_URL" ></chc:URL>
 		<chc:Email fromEnvironment="CHAOS_EMAIL" />
 		<chc:Password fromEnvironment="CHAOS_PASSWORD" />
 	</chc:ChaosConfiguration><chc:ExternalClient name="toef" className="ToefClient" namespace="\CHAOS\Harvester\toef">
@@ -54,7 +56,7 @@
 		</chc:FileProcessor>
 		<chc:MetadataProcessor className="XSLTMetadataProcessor"
 			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka">
-			<chc:Parameter name="stylesheet">../../../../1001Fortællinger/stylesheets/DKA.xsl</chc:Parameter>
+			<chc:Parameter name="stylesheet">1001Fortællinger/stylesheets/DKA.xsl</chc:Parameter>
 			<chc:validate>false</chc:validate>
 			<chc:schemaGUID>
 				00000000-0000-0000-0000-000063c30000
@@ -62,12 +64,12 @@
 		</chc:MetadataProcessor>
 		<chc:MetadataProcessor className="XSLTMetadataProcessor"
 			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka2">
-			<chc:Parameter name="stylesheet">../../../../1001Fortællinger/stylesheets/DKA2.xsl</chc:Parameter>
+			<chc:Parameter name="stylesheet">1001Fortællinger/stylesheets/DKA2.xsl</chc:Parameter>
 			<chc:validate>false</chc:validate>
 			<chc:schemaGUID>
 				5906a41b-feae-48db-bfb7-714b3e105396
 			</chc:schemaGUID>
-			<chc:schemaLocation>../../../../1001Fortællinger/schemas/DKA2.xsd</chc:schemaLocation>
+			<chc:schemaLocation>1001Fortællinger/schemas/DKA2.xsd</chc:schemaLocation>
 		</chc:MetadataProcessor>
 	</chc:Processors>
 	
