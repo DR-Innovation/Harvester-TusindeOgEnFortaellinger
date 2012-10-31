@@ -29,8 +29,6 @@
 	<chc:Processors>
 		<chc:ObjectProcessor className="SightObjectProcessor"
 			namespace="\CHAOS\Harvester\toef\Processors" name="sight">
-			<chc:Filters>
-			</chc:Filters>
 			<chc:FolderId>2</chc:FolderId>
 			<chc:ObjectTypeId>36</chc:ObjectTypeId>
 		</chc:ObjectProcessor>
