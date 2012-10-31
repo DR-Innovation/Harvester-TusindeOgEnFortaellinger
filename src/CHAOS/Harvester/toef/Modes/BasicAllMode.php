@@ -27,6 +27,7 @@ class BasicAllMode extends AllMode {
 			foreach($response->sight as $sight) {
 				$sightShadow = $this->_harvester->process('sight', $sight);
 				$sightShadow->commit($this->_harvester);
+				echo "\n";
 			}
 			$page++;
 		} while($response->sight->count() > 0);
