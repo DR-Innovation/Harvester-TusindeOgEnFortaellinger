@@ -25,6 +25,7 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 
 		$shadow = new ObjectShadow();
 		$shadow->extras["fileTypes"] = "";
+		$shadow->extras["id"] = strval($externalObject->id);
 		$shadow->query = sprintf("(%s OR %s)", $legacyQuery, $newQuery);
 		//echo "Query: ".$shadow->query;
 		//exit();
