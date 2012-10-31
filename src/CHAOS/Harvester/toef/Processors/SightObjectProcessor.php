@@ -27,8 +27,6 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$shadow->extras["fileTypes"] = "";
 		$shadow->extras["id"] = strval($externalObject->id);
 		$shadow->query = sprintf("(%s OR %s)", $legacyQuery, $newQuery);
-		//echo "Query: ".$shadow->query;
-		//exit();
 		$shadow->objectTypeId = $this->_objectTypeId;
 		$shadow->folderId = $this->_folderId;
 		$shadow = $this->_harvester->process('sight_metadata_dka', $externalObject, $shadow);
