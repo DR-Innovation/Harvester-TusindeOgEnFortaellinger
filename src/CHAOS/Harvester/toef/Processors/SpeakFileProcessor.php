@@ -18,6 +18,10 @@ class SpeakFileProcessor extends \CHAOS\Harvester\Processors\FileProcessor {
 		if(preg_match("#$urlBase(.*)#", $speak, $filenameMatches) === 1) {
 			$pathinfo = pathinfo($filenameMatches[1]);
 			$shadow->fileShadows[] = $this->createFileShadow($pathinfo['dirname'], $pathinfo['basename']);
+			// Update the extras.
+			if(!in_array('Sound', $shadow->extras['fileTypes'])) {
+				$shadow->extras['fileTypes'][] = 'Sound';
+			}
 		}
 		
 		return $shadow;
