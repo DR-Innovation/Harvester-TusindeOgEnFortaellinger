@@ -24,11 +24,10 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$this->_harvester->info("Processing '%s' #%s", strval($externalObject->title), strval($externalObject->id));
 		
 		$shadow = new ObjectShadow();
+		$shadow = $this->initializeShadow($shadow);
 		$shadow->extras["fileTypes"] = array();
 		$shadow->extras["id"] = strval($externalObject->id);
 		$shadow->query = $this->generateQuery($externalObject);
-		$shadow->objectTypeId = $this->_objectTypeId;
-		$shadow->folderId = $this->_folderId;
 		// First process the files.
 		$shadow = $this->_harvester->process('sight_file_image', $externalObject, $shadow);
 		$shadow = $this->_harvester->process('sight_file_lowres_image', $externalObject, $shadow);
@@ -46,6 +45,7 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 	
 	function skip($externalObject, $shadow = null) {
 		$shadow = new SkippedObjectShadow();
+		$shadow = $this->initializeShadow($shadow);
 		$shadow->query = $this->generateQuery($externalObject);
 		return $shadow;
 	}
