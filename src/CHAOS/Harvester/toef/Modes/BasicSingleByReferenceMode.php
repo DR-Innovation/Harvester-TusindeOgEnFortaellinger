@@ -23,9 +23,5 @@ class BasicSingleByReferenceMode extends SingleByReferenceMode {
 		} else {
 			throw new RuntimeException("Invalid reference: Got a 404 not found from the service.");
 		}
-		
-		timed();
-		$sightShadow->commit($this->_harvester);
-		timed('chaos');
 	}
 }

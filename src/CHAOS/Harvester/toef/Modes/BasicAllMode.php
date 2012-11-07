@@ -31,7 +31,6 @@ class BasicAllMode extends AllMode {
 				printf("[#%u] ", $s++);
 				
 				$sightShadow = $this->_harvester->process('sight', $sight);
-				$sightShadow->commit($this->_harvester);
 				
 				echo "\n";
 			}

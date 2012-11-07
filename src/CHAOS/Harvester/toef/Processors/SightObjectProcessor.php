@@ -40,6 +40,8 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$shadow = $this->_harvester->process('sight_metadata_dka', $externalObject, $shadow);
 		$shadow = $this->_harvester->process('sight_metadata_dka2', $externalObject, $shadow);
 		
+		$shadow->commit($this->_harvester);
+		
 		return $shadow;
 	}
 	
@@ -47,6 +49,9 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$shadow = new SkippedObjectShadow();
 		$shadow = $this->initializeShadow($shadow);
 		$shadow->query = $this->generateQuery($externalObject);
+		
+		$shadow->commit($this->_harvester);
+		
 		return $shadow;
 	}
 }
