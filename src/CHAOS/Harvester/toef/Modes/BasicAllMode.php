@@ -20,13 +20,19 @@ class BasicAllMode extends AllMode {
 		// The webservice is one-indexed.
 		$page += 1;
 		
+		$s = 1;
+		
 		do {
 			timed();
 			$response = $toef->sights($page);
 			timed('toef');
 			foreach($response->sight as $sight) {
+				// Print the number of sightsthat we have processed so far.
+				printf("[#%u] ", $s++);
+				
 				$sightShadow = $this->_harvester->process('sight', $sight);
 				$sightShadow->commit($this->_harvester);
+				
 				echo "\n";
 			}
 			$page++;
