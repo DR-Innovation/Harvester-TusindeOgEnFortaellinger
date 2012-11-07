@@ -64,6 +64,9 @@
 					</Creator>
 				</xsl:for-each>
 			</Creators>
+			<TechnicalComment />
+			<Location><xsl:value-of select="geography/municipality"/></Location>
+			<RightsDescription>Copyright © Kulturstyrelsen (<xsl:value-of select="@license"/>)</RightsDescription>
 			<Categories/>
 			<Tags>
 				<xsl:for-each select="themes/theme">

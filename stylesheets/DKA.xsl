@@ -72,7 +72,7 @@
 			</Creator>
 			<TechnicalComment />
 			<Location><xsl:value-of select="geography/municipality"/></Location>
-			<RightsDescription>Copyright © Kulturstyrelsen</RightsDescription>
+			<RightsDescription>Copyright © Kulturstyrelsen (<xsl:value-of select="@license"/>)</RightsDescription>
 			<GeoData>
 				<Latitude><xsl:value-of select="geography/latitude"/></Latitude>
 				<Longitude><xsl:value-of select="geography/longitude"/></Longitude>
