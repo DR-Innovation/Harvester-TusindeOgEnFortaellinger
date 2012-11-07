@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chc:ChaosHarvesterConfiguration
+	xmlns:chc="http://www.example.org/ChaosHarvesterConfiguration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/ChaosHarvesterConfiguration ../../Base/schemas/ChaosHarvesterConfiguration.xsd ">
+	<chc:Organisation>Kulturstyrelsen</chc:Organisation>
+	<chc:Project>1001 Fortællinger</chc:Project>
+	<chc:Description>Høster indholdet fra kulturarvstyrelsens custom restful service.</chc:Description>
+	<chc:BasePath fromEnvironment="BASEPATH" />
+	<chc:IncludePaths>
+		<chc:path>Base/src</chc:path>
+		<chc:path>chaos-client/src</chc:path>
+		<chc:path>../../Timed-PHP/src</chc:path>
+		<chc:path>1001Fortællinger/src</chc:path>
+	</chc:IncludePaths>
+	<chc:ChaosConfiguration>
+		<chc:URL fromEnvironment="CHAOS_URL" ></chc:URL>
+		<chc:Email fromEnvironment="CHAOS_EMAIL" />
+		<chc:Password fromEnvironment="CHAOS_PASSWORD" />
+	</chc:ChaosConfiguration><chc:ExternalClient name="toef" className="ToefClient" namespace="\CHAOS\Harvester\toef">
+		<chc:Parameter name="URL">http://www.kulturarv.dk/1001fortaellinger/da_DK/</chc:Parameter>
+		<chc:Parameter name="key">781a930552a97c08497d3a2acdbbc60e</chc:Parameter>
+</chc:ExternalClient><chc:Modes>
+		<chc:Mode className="BasicAllMode" type="All"
+			namespace="\CHAOS\Harvester\toef\Modes" name="all" />
+		<chc:Mode className="BasicSingleByReferenceMode" type="SingleByReference"
+			namespace="\CHAOS\Harvester\toef\Modes" name="single-reference" />
+	</chc:Modes>
+	<chc:Processors>
+		<chc:ObjectProcessor className="SightObjectProcessor"
+			namespace="\CHAOS\Harvester\toef\Processors" name="sight">
+			<chc:FolderId>441</chc:FolderId>
+			<chc:ObjectTypeId>36</chc:ObjectTypeId>
+			<chc:PublishSettings>
+				<chc:PublishAccesspoint>
+					C4C2B8DA-A980-11E1-814B-02CEA2621172
+				</chc:PublishAccesspoint>
+				<chc:UnpublishAccesspoint>
+					C4C2B8DA-A980-11E1-814B-02CEA2621172
+				</chc:UnpublishAccesspoint>
+			</chc:PublishSettings>
+		</chc:ObjectProcessor>
+		<chc:FileProcessor className="ImageFileProcessor"
+			name="sight_file_image" namespace="\CHAOS\Harvester\toef\Processors">
+			<chc:FormatId>42</chc:FormatId>
+			<chc:DestinationId>83</chc:DestinationId>
+		</chc:FileProcessor>
+		<chc:FileProcessor className="LowresImageFileProcessor"
+			name="sight_file_lowres_image" namespace="\CHAOS\Harvester\toef\Processors">
+			<chc:FormatId>51</chc:FormatId>
+			<chc:DestinationId>83</chc:DestinationId>
+		</chc:FileProcessor>
+		<chc:FileProcessor className="MainImageFileProcessor"
+			name="sight_file_main_image" namespace="\CHAOS\Harvester\toef\Processors">
+			<chc:FormatId>10</chc:FormatId>
+			<chc:DestinationId>83</chc:DestinationId>
+		</chc:FileProcessor>
+		<chc:FileProcessor className="SpeakFileProcessor"
+			name="sight_file_speak" namespace="\CHAOS\Harvester\toef\Processors">
+			<chc:FormatId>15</chc:FormatId>
+			<chc:DestinationId>82</chc:DestinationId>
+		</chc:FileProcessor>
+		<chc:MetadataProcessor className="XSLTMetadataProcessor"
+			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka">
+			<chc:Parameter name="stylesheet">1001Fortællinger/stylesheets/DKA.xsl</chc:Parameter>
+			<chc:validate>false</chc:validate>
+			<chc:schemaGUID>
+				00000000-0000-0000-0000-000063c30000
+			</chc:schemaGUID>
+		</chc:MetadataProcessor>
+		<chc:MetadataProcessor className="XSLTMetadataProcessor"
+			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka2">
+			<chc:Parameter name="stylesheet">1001Fortællinger/stylesheets/DKA2.xsl</chc:Parameter>
+			<chc:validate>false</chc:validate>
+			<chc:schemaGUID>
+				5906a41b-feae-48db-bfb7-714b3e105396
+			</chc:schemaGUID>
+			<chc:schemaLocation>1001Fortællinger/schemas/DKA2.xsd</chc:schemaLocation>
+		</chc:MetadataProcessor>
+	</chc:Processors>
+	
+	
+	
+</chc:ChaosHarvesterConfiguration>
