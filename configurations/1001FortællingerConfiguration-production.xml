@@ -14,7 +14,7 @@
 		<chc:path>1001Fortællinger/src</chc:path>
 	</chc:IncludePaths>
 	<chc:ChaosConfiguration>
-		<chc:URL fromEnvironment="CHAOS_URL" ></chc:URL>
+		<chc:URL fromEnvironment="CHAOS_URL" />
 		<chc:Email fromEnvironment="CHAOS_EMAIL" />
 		<chc:Password fromEnvironment="CHAOS_PASSWORD" />
 	</chc:ChaosConfiguration><chc:ExternalClient name="toef" className="ToefClient" namespace="\CHAOS\Harvester\toef">
