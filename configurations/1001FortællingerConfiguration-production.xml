@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <chc:ChaosHarvesterConfiguration
 	xmlns:chc="http://www.example.org/ChaosHarvesterConfiguration"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.example.org/ChaosHarvesterConfiguration ../../Base/schemas/ChaosHarvesterConfiguration.xsd ">
+	xsi:schemaLocation="http://www.example.org/ChaosHarvesterConfiguration ../../../schemas/ChaosHarvesterConfiguration.xsd ">
 	<chc:Organisation>Kulturstyrelsen</chc:Organisation>
 	<chc:Project>1001 Fortællinger</chc:Project>
 	<chc:Description>Høster indholdet fra kulturarvstyrelsens custom restful service.</chc:Description>
