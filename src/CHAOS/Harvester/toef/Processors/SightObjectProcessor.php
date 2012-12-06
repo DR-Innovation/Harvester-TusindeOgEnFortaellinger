@@ -4,11 +4,6 @@ use CHAOS\Harvester\Shadows\ObjectShadow;
 use CHAOS\Harvester\Shadows\SkippedObjectShadow;
 
 class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
-
-	public function __construct($harvester, $name, $parameter = null) {
-		$this->_harvester = $harvester;
-		$this->_harvester->debug("A ".__CLASS__." named '$name' was constructing.");
-	}
 	
 	protected function generateQuery($externalObject) {
 		// Extract the nummeric ID.

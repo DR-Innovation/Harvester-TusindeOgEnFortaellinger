@@ -5,11 +5,6 @@ use \RuntimeException;
 
 class BasicSingleByReferenceMode extends SingleByReferenceMode {
 	
-	public function __construct($harvester, $name, $parameters = null) {
-		$this->_harvester = $harvester;
-		$this->_harvester->debug("A ".__CLASS__." named '$name' was constructing.");
-	}
-	
 	public function execute($reference) {
 		$toef = $this->_harvester->getExternalClient('toef');
 		$reference = is_numeric($reference) ? intval($reference) : $reference;

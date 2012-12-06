@@ -4,11 +4,6 @@ use CHAOS\Harvester\Modes\AllMode;
 
 class BasicAllMode extends AllMode {
 	
-	public function __construct($harvester, $name, $parameters = null) {
-		$this->_harvester = $harvester;
-		$this->_harvester->debug("A ".__CLASS__." named '$name' was constructing.");
-	}
-	
 	public function execute() {
 		$toef = $this->_harvester->getExternalClient('toef');
 		/* @var $toef \CHAOS\Harvester\toef\TOEFClient */
