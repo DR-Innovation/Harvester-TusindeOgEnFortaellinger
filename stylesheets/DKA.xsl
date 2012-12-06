@@ -14,7 +14,7 @@
 	</xsl:template>
 	
 	<xsl:template name="sight">
-		<DKA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/DKA.xsd">
+		<DKA xmlns="http://www.danskkulturarv.dk/DKA.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.danskkulturarv.dk/DKA.xsd ../../../schemas/DKA.xsd ">
 			<Title><xsl:value-of select="title"/></Title>
 			<Abstract />
 			<Description>
