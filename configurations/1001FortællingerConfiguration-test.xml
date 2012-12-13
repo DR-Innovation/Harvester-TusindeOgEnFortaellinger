@@ -75,7 +75,7 @@
 			<chc:schemaGUID>
 				5906a41b-feae-48db-bfb7-714b3e105396
 			</chc:schemaGUID>
-			<chc:schemaLocation>1001Fortællinger/schemas/DKA2.xsd</chc:schemaLocation>
+			<chc:schemaLocation>../schemas/DKA2.xsd</chc:schemaLocation>
 		</chc:MetadataProcessor>
 	</chc:Processors>
 	
