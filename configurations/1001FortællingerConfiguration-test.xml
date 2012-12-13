@@ -2,7 +2,7 @@
 <chc:ChaosHarvesterConfiguration
 	xmlns:chc="http://www.example.org/ChaosHarvesterConfiguration"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.example.org/ChaosHarvesterConfiguration ../../../schemas/ChaosHarvesterConfiguration.xsd ">
+	xsi:schemaLocation="http://www.example.org/ChaosHarvesterConfiguration ../../Base/schemas/ChaosHarvesterConfiguration.xsd ">
 	<chc:Organisation>Kulturstyrelsen</chc:Organisation>
 	<chc:Project>1001 Fortællinger</chc:Project>
 	<chc:Description>Høster indholdet fra kulturarvstyrelsens custom restful service.</chc:Description>
@@ -75,7 +75,7 @@
 			<chc:schemaGUID>
 				5906a41b-feae-48db-bfb7-714b3e105396
 			</chc:schemaGUID>
-			<chc:schemaLocation>../schemas/DKA2.xsd</chc:schemaLocation>
+			<chc:schemaLocation>Base/schemas/DKA2.xsd</chc:schemaLocation>
 		</chc:MetadataProcessor>
 	</chc:Processors>
 	
