@@ -5,13 +5,14 @@ use \SimpleXMLElement;
 
 class ImageFileProcessor extends \CHAOS\Harvester\Processors\FileProcessor {
 	
-	const KULTURARV_BASE_PATH = 'http://www.kulturarv.dk/1001fortaellinger/';
+	//const KULTURARV_BASE_PATH = 'http://www.kulturarv.dk/1001fortaellinger/';
 	
 	public function process($externalObject, $shadow = null) {
 		$this->_harvester->debug(__CLASS__." is processing.");
 		
 		assert($externalObject instanceof SimpleXMLElement && $shadow instanceof ObjectShadow);
 		
+		/*
 		$urlBase = self::KULTURARV_BASE_PATH;
 		foreach($externalObject->images->image as $i) {
 			$filenameMatches = array();
@@ -24,6 +25,15 @@ class ImageFileProcessor extends \CHAOS\Harvester\Processors\FileProcessor {
 				}
 			} else {
 				trigger_error("Found an image with unknown URL.\n", E_USER_WARNING);
+			}
+		}
+		*/
+		foreach($externalObject->images->image as $i) {
+			$fileShadow = $this->createFileShadowFromURL($i->original);
+			if($fileShadow) {
+				$shadow->fileShadows[] = $fileShadow;
+			} else {
+				$this->_harvester->info("Skipping the file %s as it seems to not exist or no destination can be used.", $i->original);
 			}
 		}
 	

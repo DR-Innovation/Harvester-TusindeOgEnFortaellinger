@@ -43,22 +43,34 @@
 		<chc:FileProcessor className="ImageFileProcessor"
 			name="sight_file_image" namespace="\CHAOS\Harvester\toef\Processors">
 			<chc:FormatId>3</chc:FormatId>
-			<chc:DestinationId>9</chc:DestinationId>
+			<chc:Destination name="default">
+				<chc:baseURL>http://www.kulturarv.dk/1001fortaellinger/</chc:baseURL>
+				<chc:id>9</chc:id>
+			</chc:Destination>
 		</chc:FileProcessor>
 		<chc:FileProcessor className="LowresImageFileProcessor"
 			name="sight_file_lowres_image" namespace="\CHAOS\Harvester\toef\Processors">
 			<chc:FormatId>8</chc:FormatId>
-			<chc:DestinationId>9</chc:DestinationId>
+			<chc:Destination name="default">
+				<chc:baseURL>http://www.kulturarv.dk/1001fortaellinger/</chc:baseURL>
+				<chc:id>9</chc:id>
+			</chc:Destination>
 		</chc:FileProcessor>
 		<chc:FileProcessor className="MainImageFileProcessor"
 			name="sight_file_main_image" namespace="\CHAOS\Harvester\toef\Processors">
 			<chc:FormatId>9</chc:FormatId>
-			<chc:DestinationId>9</chc:DestinationId>
+			<chc:Destination name="default">
+				<chc:baseURL>http://www.kulturarv.dk/1001fortaellinger/</chc:baseURL>
+				<chc:id>9</chc:id>
+			</chc:Destination>
 		</chc:FileProcessor>
 		<chc:FileProcessor className="SpeakFileProcessor"
 			name="sight_file_speak" namespace="\CHAOS\Harvester\toef\Processors">
 			<chc:FormatId>2</chc:FormatId>
-			<chc:DestinationId>9</chc:DestinationId>
+			<chc:Destination name="default">
+				<chc:baseURL>http://www.kulturarv.dk/1001fortaellinger/</chc:baseURL>
+				<chc:id>9</chc:id>
+			</chc:Destination>
 		</chc:FileProcessor>
 		<chc:MetadataProcessor className="XSLTMetadataProcessor"
 			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka">
