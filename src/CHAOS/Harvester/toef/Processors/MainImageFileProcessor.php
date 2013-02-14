@@ -4,7 +4,7 @@ class MainImageFileProcessor extends \CHAOS\Harvester\Processors\FileProcessor {
 	
 	//const KULTURARV_BASE_PATH = 'http://www.kulturarv.dk/1001fortaellinger/';
 	
-	public function process($externalObject, $shadow = null) {
+	public function process($externalObject, &$shadow = null) {
 		$mainImage = strval($externalObject->mainImage->thumbnail);
 		
 		/*

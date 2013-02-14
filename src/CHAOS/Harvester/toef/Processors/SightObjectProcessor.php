@@ -14,7 +14,7 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		return sprintf("(%s OR %s)", $legacyQuery, $newQuery);
 	}
 
-	public function process($externalObject, $shadow = null) {
+	public function process($externalObject, &$shadow = null) {
 		$this->_harvester->debug(__CLASS__." is processing.");
 		$this->_harvester->info("Processing '%s' #%s", strval($externalObject->title), strval($externalObject->id));
 		
@@ -24,23 +24,23 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$shadow->extras["id"] = strval($externalObject->id);
 		$shadow->query = $this->generateQuery($externalObject);
 		// First process the files.
-		$shadow = $this->_harvester->process('sight_file_image', $externalObject, $shadow);
-		$shadow = $this->_harvester->process('sight_file_lowres_image', $externalObject, $shadow);
-		$shadow = $this->_harvester->process('sight_file_main_image', $externalObject, $shadow);
-		$shadow = $this->_harvester->process('sight_file_speak', $externalObject, $shadow);
+		$this->_harvester->process('sight_file_image', $externalObject, $shadow);
+		$this->_harvester->process('sight_file_lowres_image', $externalObject, $shadow);
+		$this->_harvester->process('sight_file_main_image', $externalObject, $shadow);
+		$this->_harvester->process('sight_file_speak', $externalObject, $shadow);
 		if(is_array($shadow->extras["fileTypes"])) {
 			$shadow->extras["fileTypes"] = implode(', ', $shadow->extras["fileTypes"]);
 		}
 		// Then the metadata.
-		$shadow = $this->_harvester->process('sight_metadata_dka', $externalObject, $shadow);
-		$shadow = $this->_harvester->process('sight_metadata_dka2', $externalObject, $shadow);
+		$this->_harvester->process('sight_metadata_dka', $externalObject, $shadow);
+		$this->_harvester->process('sight_metadata_dka2', $externalObject, $shadow);
 		
 		$shadow->commit($this->_harvester);
 		
 		return $shadow;
 	}
 	
-	function skip($externalObject, $shadow = null) {
+	function skip($externalObject, &$shadow = null) {
 		$shadow = new SkippedObjectShadow();
 		$shadow = $this->initializeShadow($shadow);
 		$shadow->query = $this->generateQuery($externalObject);
