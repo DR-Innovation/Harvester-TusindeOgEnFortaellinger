@@ -1,7 +1,6 @@
 <?php
 namespace CHAOS\Harvester\toef\Modes;
 use CHAOS\Harvester\Modes\SingleByReferenceMode;
-use \RuntimeException;
 
 class BasicSingleByReferenceMode extends SingleByReferenceMode {
 	
@@ -16,7 +15,7 @@ class BasicSingleByReferenceMode extends SingleByReferenceMode {
 		if(strval($sightAttributes['code']) != '404') {
 			$sightShadow = $this->_harvester->process('sight', $sight);
 		} else {
-			throw new RuntimeException("Invalid reference: Got a 404 not found from the service.");
+			throw new \RuntimeException("Invalid reference: Got a 404 not found from the service.");
 		}
 	}
 }
