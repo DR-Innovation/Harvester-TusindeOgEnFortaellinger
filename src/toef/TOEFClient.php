@@ -35,7 +35,7 @@ class TOEFClient {
 		curl_setopt($this->_curlHandle, CURLOPT_URL, $url);
 		$result = curl_exec($this->_curlHandle);
 		if($result === false) {
-			throw new RuntimeException("Problem occured while communicating with the service: ".curl_error($this->_curlHandle));
+			throw new \RuntimeException("Problem occured while communicating with the service: ".curl_error($this->_curlHandle));
 		} else {
 			return simplexml_load_string($result);
 		}
