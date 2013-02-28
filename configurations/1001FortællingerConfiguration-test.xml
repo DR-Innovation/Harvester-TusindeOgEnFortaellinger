@@ -14,7 +14,7 @@
 		<chc:path>../src</chc:path>
 	</chc:IncludePaths>
 	<chc:ChaosConfiguration>
-		<chc:URL fromEnvironment="CHAOS_URL" ></chc:URL>
+		<chc:URL fromEnvironment="CHAOS_URL" />
 		<chc:Email fromEnvironment="CHAOS_EMAIL" />
 		<chc:Password fromEnvironment="CHAOS_PASSWORD" />
 	</chc:ChaosConfiguration><chc:ExternalClient name="toef" className="ToefClient" namespace="\CHAOS\Harvester\toef">
@@ -74,7 +74,7 @@
 		</chc:FileProcessor>
 		<chc:MetadataProcessor className="XSLTMetadataProcessor"
 			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka">
-			<chc:Parameter name="stylesheet">1001Fortællinger/stylesheets/DKA.xsl</chc:Parameter>
+			<chc:Parameter name="stylesheet">../stylesheets/DKA.xsl</chc:Parameter>
 			<chc:validate>false</chc:validate>
 			<chc:schemaGUID>
 				00000000-0000-0000-0000-000063c30000
@@ -82,7 +82,7 @@
 		</chc:MetadataProcessor>
 		<chc:MetadataProcessor className="XSLTMetadataProcessor"
 			namespace="\CHAOS\Harvester\Processors" name="sight_metadata_dka2">
-			<chc:Parameter name="stylesheet">1001Fortællinger/stylesheets/DKA2.xsl</chc:Parameter>
+			<chc:Parameter name="stylesheet">../stylesheets/DKA2.xsl</chc:Parameter>
 			<chc:validate>false</chc:validate>
 			<chc:schemaGUID>
 				5906a41b-feae-48db-bfb7-714b3e105396
