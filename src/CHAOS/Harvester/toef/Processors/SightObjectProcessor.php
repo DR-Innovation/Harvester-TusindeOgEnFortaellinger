@@ -1,7 +1,6 @@
 <?php
 namespace CHAOS\Harvester\toef\Processors;
 use CHAOS\Harvester\Shadows\ObjectShadow;
-use CHAOS\Harvester\Shadows\SkippedObjectShadow;
 
 class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 	
