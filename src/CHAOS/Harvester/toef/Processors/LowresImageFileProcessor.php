@@ -8,7 +8,7 @@ class LowresImageFileProcessor extends \CHAOS\Harvester\Processors\FileProcessor
 	
 	// const KULTURARV_BASE_PATH = 'http://www.kulturarv.dk/1001fortaellinger/';
 	
-	public function process($externalObject, &$shadow = null) {
+	public function process(&$externalObject, &$shadow = null) {
 		$this->_harvester->debug(__CLASS__." is processing.");
 		
 		assert($externalObject instanceof SimpleXMLElement && $shadow instanceof ObjectShadow);
