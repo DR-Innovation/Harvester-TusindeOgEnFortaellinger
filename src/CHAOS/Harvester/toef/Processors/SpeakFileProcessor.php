@@ -37,7 +37,7 @@ class SpeakFileProcessor extends \CHAOS\Harvester\Processors\FileProcessor {
 				$shadow->extras['fileTypes'][] = 'Sound';
 			}
 		} else {
-			$this->_harvester->info("Skipping the file %s as it seems to not exist or no destination can be used.", $i->original);
+			$this->_harvester->info("Skipping the file %s as it seems to not exist or no destination can be used.", $speak);
 		}
 		
 		return $shadow;
