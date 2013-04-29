@@ -9,7 +9,7 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$nummericId = explode('/', strval($externalObject->id));
 		$nummericId = $nummericId[count($nummericId)-1];
 		$legacyQuery = sprintf('((DKA-Organization:"%s" OR DKA-Organization:"%s") AND ObjectTypeID:%u AND m00000000-0000-0000-0000-000063c30000_da_all:"%s")', 'Kulturarvsstyrelsen', '1001 fortællinger om Danmark - Kulturstyrelsen', $this->_objectTypeId, $nummericId);
-		$newQuery = sprintf('(FolderTree:%u AND ObjectTypeID:%u AND DKA-ExternalIdentifier:"%s")', $this->_folderId, $this->_objectTypeId, strval($externalObject->id));
+		$newQuery = sprintf('(FolderID:%u AND ObjectTypeID:%u AND DKA-ExternalIdentifier:"%s")', $this->_folderId, $this->_objectTypeId, strval($externalObject->id));
 		return sprintf("(%s OR %s)", $legacyQuery, $newQuery);
 	}
 
@@ -17,10 +17,9 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$this->_harvester->info("Processing '%s' #%s", strval($externalObject->title), strval($externalObject->id));
 		
 		$shadow = new ObjectShadow();
-		$shadow = $this->initializeShadow($shadow);
 		$shadow->extras["fileTypes"] = array();
 		$shadow->extras["id"] = strval($externalObject->id);
-		$shadow->query = $this->generateQuery($externalObject);
+		$shadow = $this->initializeShadow($externalObject, $shadow);
 		// First process the files.
 		$this->_harvester->process('sight_file_image', $externalObject, $shadow);
 		$this->_harvester->process('sight_file_lowres_image', $externalObject, $shadow);
@@ -38,14 +37,16 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		return $shadow;
 	}
 	
+	/*
 	function skip($externalObject, &$shadow = null) {
 		$shadow = new ObjectShadow();
 		$shadow->skipped = true;
-		$shadow = $this->initializeShadow($shadow);
+		$shadow = $this->initializeShadow($externalObject, $shadow);
 		$shadow->query = $this->generateQuery($externalObject);
 		
 		$shadow->commit($this->_harvester);
 		
 		return $shadow;
 	}
+	*/
 }
