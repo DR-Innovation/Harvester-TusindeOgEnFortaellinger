@@ -8,9 +8,11 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		// Extract the nummeric ID.
 		$nummericId = explode('/', strval($externalObject->id));
 		$nummericId = $nummericId[count($nummericId)-1];
-		$legacyQuery = sprintf('((DKA-Organization:"%s" OR DKA-Organization:"%s") AND ObjectTypeID:%u AND m00000000-0000-0000-0000-000063c30000_da_all:"%s")', 'Kulturarvsstyrelsen', '1001 fortællinger om Danmark - Kulturstyrelsen', $this->_objectTypeId, $nummericId);
-		$newQuery = sprintf('(FolderID:%u AND ObjectTypeID:%u AND DKA-ExternalIdentifier:"%s")', $this->_folderId, $this->_objectTypeId, strval($externalObject->id));
-		return sprintf("(%s OR %s)", $legacyQuery, $newQuery);
+		$queries = array(
+			sprintf('(FolderID:%u AND ObjectTypeID:%u AND DKA-ExternalIdentifier:"%s")', $this->_folderId, $this->_objectTypeId, strval($externalObject->id)),
+			sprintf('((DKA-Organization:"%s" OR DKA-Organization:"%s") AND ObjectTypeID:%u AND m00000000-0000-0000-0000-000063c30000_da_all:"%s")', 'Kulturarvsstyrelsen', '1001 fortællinger om Danmark - Kulturstyrelsen', $this->_objectTypeId, $nummericId)
+		);
+		return $queries;
 	}
 
 	public function process(&$externalObject, &$shadow = null) {
