@@ -22,6 +22,14 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$shadow->extras["fileTypes"] = array();
 		$shadow->extras["id"] = strval($externalObject->id);
 		$shadow = $this->initializeShadow($externalObject, $shadow);
+
+		$this->_harvester->process('unpublished-by-curator-processor', $externalObject, $shadow);
+		
+		// If the unpublished by curator filter was failing ..
+		if($shadow->skipped) {
+			return $shadow;
+		}
+
 		// First process the files.
 		$this->_harvester->process('sight_file_image', $externalObject, $shadow);
 		$this->_harvester->process('sight_file_lowres_image', $externalObject, $shadow);
