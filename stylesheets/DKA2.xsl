@@ -45,22 +45,22 @@
 			<Creators>
 				<xsl:for-each select="administrator">
 					<Creator>
-						<xsl:value-of select="name" />
 						<xsl:attribute name="Role">Administrator</xsl:attribute>
+						<xsl:value-of select="name" />
 					</Creator>
 				</xsl:for-each>
 				<xsl:for-each select="images/image[count(. | key('image-by-credit', credit)[1]) = 1 and credit != '']">
 					<xsl:sort select="credit" />
 					<Creator>
-						<xsl:value-of select="credit" />
 						<xsl:attribute name="Role">Fotograf</xsl:attribute>
+						<xsl:value-of select="credit" />
 					</Creator>
 				</xsl:for-each>
 				<xsl:for-each select="stories/story[count(. | key('story-by-author_name', author/name)[1]) = 1 and author/name != '']">
 					<xsl:sort select="author/name" />
 					<Creator>
-						<xsl:value-of select="author/name" />
 						<xsl:attribute name="Role">Forfatter</xsl:attribute>
+						<xsl:value-of select="author/name" />
 					</Creator>
 				</xsl:for-each>
 			</Creators>
