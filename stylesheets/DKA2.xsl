@@ -68,6 +68,11 @@
 			<Location><xsl:value-of select="geography/municipality"/></Location>
 			<RightsDescription>Copyright © Kulturstyrelsen (<xsl:value-of select="@license"/>)</RightsDescription>
 			<Categories/>
+			<xsl:if test="string-length($publishedDate) > 0">
+			  	<FirstPublishedDate>
+			  		<xsl:value-of select="$publishedDate"/>
+			  	</FirstPublishedDate>
+		  	</xsl:if>
 			<Tags>
 				<xsl:for-each select="themes/theme">
 					<Tag><xsl:value-of select="title"/></Tag>

@@ -21,6 +21,8 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$shadow = new ObjectShadow();
 		$shadow->extras["fileTypes"] = array();
 		$shadow->extras["id"] = strval($externalObject->id);
+		$shadow->extras["publishedDate"] = $this->extractDate($externalObject);
+
 		$shadow = $this->initializeShadow($externalObject, $shadow);
 
 		$this->_harvester->process('unpublished-by-curator-processor', $externalObject, $shadow);
@@ -45,6 +47,32 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 		$shadow->commit($this->_harvester);
 		
 		return $shadow;
+	}
+
+	private function extractDate($externalObject) {
+		$periods = $externalObject->xpath('stories/story/periods/period');
+		if (count($periods) > 0) {
+			// There should only be one, but to make sure we loop through all the periods
+			foreach ($periods as $period) { // We're only interested in yearfrom
+				if (!isset($date)) {
+					$date = strval($period->yearfrom);
+				} else if ($date > $period->yearfrom) {
+					$date = strval($period->yearfrom);
+				}
+			}
+			$date .= '-01-01T00:00:00';
+
+			// Makes sure it is a valid date
+			$dateparse = date_parse($date);
+			if ($dateparse["error_count"] > 0) {
+				return "";
+			}
+
+			$date = new \DateTime($date);
+			return $date->format('Y-m-d\TH:i:s');
+		}
+
+		return "";
 	}
 	
 	/*
