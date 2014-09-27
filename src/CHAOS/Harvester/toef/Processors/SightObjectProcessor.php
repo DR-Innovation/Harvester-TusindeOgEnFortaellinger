@@ -55,9 +55,9 @@ class SightObjectProcessor extends \CHAOS\Harvester\Processors\ObjectProcessor {
 			// There should only be one, but to make sure we loop through all the periods
 			foreach ($periods as $period) { // We're only interested in yearfrom
 				if (!isset($date)) {
-					$date = strval($period->yearfrom);
+					$date = preg_replace("/[^0-9]/","",strval($period->yearfrom)); // Sometimes there is a symbol in front of the year (remove it with regex)
 				} else if ($date > $period->yearfrom) {
-					$date = strval($period->yearfrom);
+					$date = preg_replace("/[^0-9]/","",strval($period->yearfrom));
 				}
 			}
 			$date .= '-01-01T00:00:00';
